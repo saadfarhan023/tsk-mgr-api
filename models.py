@@ -15,5 +15,6 @@ class Task(SQLModel, table=True):
     title: str
     description: Optional[str] = None
     completed: bool = Field(default=False)
+    priority: int = Field(default=0)
     owner_id: int = Field(foreign_key="user.id")
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

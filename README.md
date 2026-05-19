@@ -4,7 +4,7 @@ A REST API for managing tasks with JWT authentication, built with FastAPI and Po
 
 ## Stack
 
-- FastAPI, SQLModel, PostgreSQL, JWT (python-jose), bcrypt, Celery, Redis
+- FastAPI, SQLModel, PostgreSQL, JWT (python-jose), bcrypt, Celery, Redis, Alembic
 
 ## Endpoints
 
@@ -46,6 +46,12 @@ uvicorn main:app --reload
 
 ```bash
 celery -A celery_app worker --loglevel=info
+```
+
+### Run database migrations
+
+```bash
+alembic upgrade head
 ```
 
 ## Run with Podman (full stack)
