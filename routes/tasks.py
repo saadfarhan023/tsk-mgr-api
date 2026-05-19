@@ -44,9 +44,14 @@ def create_task(
 
 @router.get("/")
 def get_tasks(
-    user_id: int = Depends(get_current_user_id), session: Session = Depends(get_session)
+    skip: int = 0,
+    limit: int = 10,
+    user_id: int = Depends(get_current_user_id),
+    session: Session = Depends(get_session),
 ):
-    tasks = session.exec(select(Task).where(Task.owner_id == user_id)).all()
+    tasks = session.exec(
+        select(Task).where(Task.owner_id == user_id).offset(skip).limit(limit)
+    ).all()
     return tasks
 
 

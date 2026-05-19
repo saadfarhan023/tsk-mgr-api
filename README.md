@@ -15,8 +15,9 @@ A REST API for managing tasks with JWT authentication, built with FastAPI and Po
 
 ### Tasks (require Bearer token)
 
-- `GET /tasks/` — list your tasks
+- `GET /tasks/` — list your tasks (supports `?skip=0&limit=10`)
 - `POST /tasks/` — create a task
+- `PATCH /tasks/{id}` — update title or description
 - `PATCH /tasks/{id}/complete` — mark complete
 - `DELETE /tasks/{id}` — delete a task
 
@@ -41,14 +42,7 @@ podman-compose up db
 uvicorn main:app --reload
 ```
 
-## Environment Variables
-
-```bash
-DATABASE_URL=postgresql://user:password@localhost/taskdb
-SECRET_KEY=your-secret-key
-```
-
-## Run with Podman
+## Run with Podman (full stack)
 
 Start database only:
 
@@ -60,4 +54,11 @@ Start database + api:
 
 ```bash
 podman-compose up --build
+```
+
+## Environment Variables
+
+```bash
+DATABASE_URL=postgresql://user:password@localhost/taskdb
+SECRET_KEY=your-secret-key
 ```
