@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from tasks.jobs import notify_task_created
 from sqlmodel import Session, select
 from fastapi.security import OAuth2PasswordBearer
 from auth import decode_token
@@ -39,6 +40,7 @@ def create_task(
     session.add(task)
     session.commit()
     session.refresh(task)
+    notify_task_created.delay(task.id, task.title)
     return task
 
 
