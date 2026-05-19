@@ -4,7 +4,7 @@ A REST API for managing tasks with JWT authentication, built with FastAPI and Po
 
 ## Stack
 
-- FastAPI, SQLModel, PostgreSQL, JWT (python-jose), bcrypt
+- FastAPI, SQLModel, PostgreSQL, JWT (python-jose), bcrypt, Celery, Redis
 
 ## Endpoints
 
@@ -42,6 +42,12 @@ podman-compose up db
 uvicorn main:app --reload
 ```
 
+### Start the Celery worker
+
+```bash
+celery -A celery_app worker --loglevel=info
+```
+
 ## Run with Podman (full stack)
 
 Start database only:
@@ -61,4 +67,9 @@ podman-compose up --build
 ```bash
 DATABASE_URL=postgresql://user:password@localhost/taskdb
 SECRET_KEY=your-secret-key
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-gmail-app-password
+SMTP_FROM=your-email@gmail.com
 ```

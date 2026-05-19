@@ -6,7 +6,7 @@ from auth import decode_token
 from pydantic import BaseModel
 from typing import Optional
 from database import get_session
-from models import Task
+from models import Task, User
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
@@ -38,9 +38,10 @@ def create_task(
 ):
     task = Task(title=body.title, description=body.description, owner_id=user_id)
     session.add(task)
+    user = session.get(User, user_id)
     session.commit()
     session.refresh(task)
-    notify_task_created.delay(task.id, task.title)
+    notify_task_created.delay(task.id, task.title, user.email)  # type: ignore
     return task
 
 
