@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=".env", override=True)
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI

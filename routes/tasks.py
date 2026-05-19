@@ -24,6 +24,11 @@ class TaskRequest(BaseModel):
     description: Optional[str] = None
 
 
+class TaskUpdateRequest(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+
+
 @router.post("/")
 def create_task(
     body: TaskRequest,
@@ -43,6 +48,26 @@ def get_tasks(
 ):
     tasks = session.exec(select(Task).where(Task.owner_id == user_id)).all()
     return tasks
+
+
+@router.patch("/{task_id}")
+def update_task(
+    task_id: int,
+    body: TaskUpdateRequest,
+    user_id: int = Depends(get_current_user_id),
+    session: Session = Depends(get_session),
+):
+    task = session.get(Task, task_id)
+    if not task or task.owner_id != user_id:
+        raise HTTPException(status_code=404, detail="Task not found")
+    if body.title is not None:
+        task.title = body.title
+    if body.description is not None:
+        task.description = body.description
+    session.add(task)
+    session.commit()
+    session.refresh(task)
+    return task
 
 
 @router.patch("/{task_id}/complete")
