@@ -43,7 +43,7 @@ uvicorn main:app --reload
 
 ## Environment Variables
 
-```
+```bash
 DATABASE_URL=postgresql://user:password@localhost/taskdb
 SECRET_KEY=your-secret-key
 ```
