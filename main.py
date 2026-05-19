@@ -4,6 +4,7 @@ load_dotenv()
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+
 from sqlmodel import SQLModel
 from database import engine
 from routes.users import router as users_router
@@ -17,7 +18,9 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    lifespan=lifespan,
+)
 
 
 @app.get("/")

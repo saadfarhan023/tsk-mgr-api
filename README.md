@@ -32,7 +32,7 @@ cp .env.example .env  # fill in your values
 ### Start the database
 
 ```bash
-podman-compose up -d
+podman-compose up db
 ```
 
 ### Start the API
@@ -46,4 +46,18 @@ uvicorn main:app --reload
 ```bash
 DATABASE_URL=postgresql://user:password@localhost/taskdb
 SECRET_KEY=your-secret-key
+```
+
+## Run with Podman
+
+Start database only:
+
+```bash
+podman-compose up db
+```
+
+Start database + api:
+
+```bash
+podman-compose up --build
 ```
